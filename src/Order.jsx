@@ -61,7 +61,15 @@ export default function Order() {
         <h2>Create Order</h2>
         <form onSubmit={(e) => {
           e.preventDefault();
-          setCart([...cart, { name: pizzaType, size: pizzaSize, price }]);
+          if (!selectedPizza) return;
+          setCart((prev) => [
+            ...prev,
+            {
+              pizza: selectedPizza,
+              size: pizzaSize,
+              price,
+            },
+          ]);
         }}>
           <div>
             <div>
@@ -127,9 +135,8 @@ export default function Order() {
             ) : null
           }
         </form>
-
       </div>
-      {loading ? <h2>Loading ...</h2> : <Cart cart={cart} />}
+      {loading ? <h2>Loading ...</h2> : <Cart cart={cart} checkout={checkout} />}
     </div>
   );
 }
