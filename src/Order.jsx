@@ -1,3 +1,4 @@
+/** biome-ignore-all assist/source/organizeImports: <> */
 import Pizza from "./Pizza";
 import { useEffect, useState } from "react";
 
@@ -10,26 +11,28 @@ export default function Order() {
 
   const [pizzaTypes, setPizzaTypes] = useState([]);
   const [pizzaType, setPizzaType] = useState("pepperoni");
-  const [pizzaSize, setPizzaSize] = useState("medium");
+  const [pizzaSize, setPizzaSize] = useState("M");
   const [loading, setLoading] = useState(true);
 
   let price, selectedPizza;
 
   if (!loading) {
     selectedPizza = pizzaTypes.find(pizza => pizza.name === pizzaType);
-    price = intl.format(
-      selectedPizza.sizes ? selectedPizza.sizes[pizzaSize] : ""
-    );
-  }
-
-  async function fetchPizzaTypes() {
-    const pizzaResponse = await fetch("/api/pizzas");
-    const pizzaJson = await pizzaResponse.json();
-    setPizzaTypes(pizzaJson);
-    setLoading(false);
+    if (selectedPizza) {
+      price = intl.format(
+        selectedPizza.sizes ? selectedPizza.sizes[pizzaSize] : 0
+      );
+    }
   }
 
   useEffect(() => {
+    async function fetchPizzaTypes() {
+      const pizzaResponse = await fetch("/api/pizzas");
+      const pizzaJson = await pizzaResponse.json();
+      setPizzaTypes(pizzaJson);
+      setLoading(false);
+    }
+  
     fetchPizzaTypes();
   }, []);
 
@@ -86,18 +89,10 @@ export default function Order() {
           </div>
           <button type="submit">Add to Cart</button>
         </div>
-        <div className="order-pizza">
-          <Pizza
-            name={selectedPizza?.name}
-            description={selectedPizza?.description}
-            image={selectedPizza?.image}
-          />
-          <p>{intl.format(price)}</p>
-        </div>
         {
           loading ? (
             <h3>Loading...</h3>
-          ) : (
+          ) : selectedPizza ? (
             <div className="order-pizza">
               <Pizza
                 name={selectedPizza.name}
@@ -106,7 +101,7 @@ export default function Order() {
               />
               <p>{price}</p>
             </div>
-          )
+          ) : null
         }
       </form>
     </div>
