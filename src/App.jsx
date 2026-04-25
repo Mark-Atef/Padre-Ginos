@@ -8,9 +8,9 @@ const router = createRouter({ routeTree });
 
 const App = () => {
   return (
-    <StrictMode>
+
       <RouterProvider router={router} />
-    </StrictMode>
+
   );
 };
 

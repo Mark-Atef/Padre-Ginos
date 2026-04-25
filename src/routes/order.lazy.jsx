@@ -1,8 +1,14 @@
 /** biome-ignore-all assist/source/organizeImports: <> */
-import Pizza from "./Pizza";
+import Pizza from "../Pizza";
 import { useEffect, useState, useContext } from "react";
-import Cart from "./Cart";
-import { CartContext } from "./Contexts";
+import Cart from "../Cart";
+import { CartContext } from "../Contexts";
+import { createLazyFileRoute } from "@tanstack/react-router";
+
+export const Route = createLazyFileRoute("/order")({
+  component : Order,
+});
+
 
 export default function Order() {
 
