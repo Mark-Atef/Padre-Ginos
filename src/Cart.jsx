@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <> */
+/** biome-ignore-all assist/source/organizeImports: <> */
 import Pizza from "./Pizza";
 const intl = new Intl.NumberFormat("en-US", {
   style: "currency",

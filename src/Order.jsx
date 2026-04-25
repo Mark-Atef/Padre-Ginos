@@ -1,7 +1,8 @@
 /** biome-ignore-all assist/source/organizeImports: <> */
 import Pizza from "./Pizza";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Cart from "./Cart";
+import { CartContext } from "./Contexts";
 
 export default function Order() {
 
@@ -14,7 +15,7 @@ export default function Order() {
   const [pizzaSize, setPizzaSize] = useState("M");
   const [pizzaTypes, setPizzaTypes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useContext(CartContext);
 
   async function checkout() {
     setLoading(true);
